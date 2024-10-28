@@ -9,6 +9,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -57,9 +58,15 @@ class OrderPaymentResource extends Resource
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
+                
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
+                Action::make('Cetak Invoice')
+                    ->icon('heroicon-o-printer')
+                    ->iconButton()
+                    ->url(fn ($record) => route('order_payment_invoice', base64_encode($record->order->order_code)))
+                    ->openUrlInNewTab()
             ])
             // ->bulkActions([
             //     Tables\Actions\BulkActionGroup::make([
@@ -83,7 +90,7 @@ class OrderPaymentResource extends Resource
         return [
             'index' => Pages\ListOrderPayments::route('/'),
             // 'create' => Pages\CreateOrderPayment::route('/create'),
-            'edit' => Pages\EditOrderPayment::route('/{record}/edit'),
+            // 'edit' => Pages\EditOrderPayment::route('/{record}/edit'),
         ];
     }
 
