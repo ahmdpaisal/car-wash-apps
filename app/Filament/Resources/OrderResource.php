@@ -315,6 +315,10 @@ class OrderResource extends Resource
                         //Update order's payment status
                         $order->payment_status = 'Lunas';
                         $order->save();
+                    })
+                    ->after(function ($action, Order $order){
+                        $action->redirect(route('order_payment_invoice', base64_encode($order->order_code)));
+
                     }),
                 ActionTables::make('changeOrderStatus')
                     ->label('Ubah Status Order')

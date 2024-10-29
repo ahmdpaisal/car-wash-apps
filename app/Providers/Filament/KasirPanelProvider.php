@@ -27,12 +27,14 @@ class KasirPanelProvider extends PanelProvider
             ->default()
             ->id('kasir')
             ->path('')
-            ->spa()
+            // ->spa()
             ->login(CustomLogin::class)
             ->passwordReset()
             ->profile(isSimple: false)
             ->sidebarCollapsibleOnDesktop()
             ->databaseTransactions()
+            ->brandName('Max Clean')
+            ->favicon(asset('images/logo1.jpg'))
             ->colors([
                 'primary' => Color::Emerald,
             ])

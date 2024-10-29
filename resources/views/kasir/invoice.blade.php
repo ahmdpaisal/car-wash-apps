@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Invoice {{ $orderPayment->order_code }}</title>
+    <title>INV_{{ $orderPayment->order->order_code }}</title>
     <style>
         @page {
             margin: 0;
@@ -22,8 +22,6 @@
         /* Header */
         .header {
             text-align: center;
-            font-weight: bold;
-            font-size: 14px;
             margin-bottom: 8px;
             padding: 5px 0;
             /* border-bottom: 1px solid #000; */
@@ -87,7 +85,9 @@
     </style>
 </head>
 <body>
-    <div class="header">INVOICE</div>
+    <div class="header">
+        <img src="{{ asset('images/logo1.jpg') }}" alt="" width="100px" height="48px">
+    </div>
 
     <div class="info">
         <p><strong>No:</strong> {{ $orderPayment->order->order_code }}</p>
@@ -137,5 +137,13 @@
         <p>Thank you for your purchase!</p>
         <p>{{ now()->toDateString() }}</p>
     </div> --}}
+
+    <META HTTP-EQUIV="REFRESH" CONTENT="2; URL={{ url('/order-payments') }}">
+
+    <script type="text/javascript">
+        window.print();
+        
+        
+    </script>
 </body>
 </html>

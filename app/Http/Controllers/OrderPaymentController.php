@@ -21,10 +21,16 @@ class OrderPaymentController extends Controller
         $orderPayment->load('order.orderDetails');
 
         //Use DomPDF
-        return $this->configDomPDF($order->order_code, $orderPayment);
+        // return $this->configDomPDF($order->order_code, $orderPayment);
 
         //Use Snappy
         // return $this->configSnappy($order->order_code, $orderPayment);
+
+
+        //Use Blade direct
+        return view('kasir.invoice', [
+            'orderPayment' => $orderPayment,
+        ]);
 
         
     }
