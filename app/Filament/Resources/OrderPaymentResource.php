@@ -66,7 +66,6 @@ class OrderPaymentResource extends Resource
                     ->icon('heroicon-o-printer')
                     ->iconButton()
                     ->url(fn ($record) => route('order_payment_invoice', base64_encode($record->order->order_code)))
-                    ->openUrlInNewTab()
             ])
             // ->bulkActions([
             //     Tables\Actions\BulkActionGroup::make([
