@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\OrderPaymentResource\Pages;
 use App\Filament\Resources\OrderPaymentResource\RelationManagers;
+use App\Models\Order;
 use App\Models\OrderPayment;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -65,7 +66,20 @@ class OrderPaymentResource extends Resource
                 Action::make('Cetak Invoice')
                     ->icon('heroicon-o-printer')
                     ->iconButton()
-                    ->url(fn ($record) => route('order_payment_invoice', base64_encode($record->order->order_code)))
+                    ->url(fn ($record) => route('order_payment_invoice', base64_encode($record->order->order_code))),
+                Action::make('Batal Bayar')
+                    ->icon('heroicon-o-x-circle')
+                    ->iconButton()
+                    ->color('danger')
+                    ->requiresConfirmation()
+                    ->action(function ($record) {
+                        
+                        $order = Order::find($record->order_id);
+                        $order->payment_status = 'Belum Lunas';
+                        $order->save();
+
+                        $record->delete();
+                    }),
             ])
             // ->bulkActions([
             //     Tables\Actions\BulkActionGroup::make([
