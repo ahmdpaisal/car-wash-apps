@@ -232,8 +232,8 @@ class OrderResource extends Resource
                     ->icon('heroicon-o-banknotes')
                     ->iconButton()
                     ->color('warning')
-                    ->visible(function (Order $order) {
-                        return $order->payment_status != 'Lunas' || $order->order_status == 'Dibatalkan';
+                    ->visible(function ($record) {
+                        return $record->payment_status != 'Lunas' && $record->order_status != 'Dibatalkan';
                     })
                     ->fillForm(fn (Order $order): array => [
                         'order_id' => $order->id,
@@ -325,8 +325,8 @@ class OrderResource extends Resource
                     ->icon('heroicon-o-arrow-path')
                     ->iconButton()
                     ->color('info')
-                    ->visible(function (Order $order) {
-                        return $order->payment_status != 'Lunas';
+                    ->visible(function ($record) {
+                        return $record->payment_status != 'Lunas' && $record->order_status != 'Dibatalkan';
                     })
                     ->fillForm(fn (Order $order): array => [
                         'order_status' => $order->order_status,
@@ -350,13 +350,18 @@ class OrderResource extends Resource
                 ActionGroup::make([
                     ViewAction::make(),
                     EditAction::make()
-                        ->visible(function (Order $order) {
-                            return $order->payment_status != 'Lunas';
+                        ->visible(function ($record) {
+                            return $record->payment_status != 'Lunas' && $record->order_status != 'Dibatalkan';
                         }),
                     DeleteAction::make()
-                        ->visible(function (Order $order) {
-                            return $order->payment_status != 'Lunas';
+                        ->visible(function ($record) {
+                            return $record->payment_status != 'Lunas';
+                        })
+                        ->after(function ($record) {
+                            $record->order_status = 'Dibatalkan';
+                            $record->save();
                         }),
+                    ForceDeleteAction::make(),
                 ]),
             ])
             ->bulkActions([
@@ -367,7 +372,7 @@ class OrderResource extends Resource
                 ]),
             ])
             ->checkIfRecordIsSelectableUsing(
-                fn (Order $order): bool => in_array($order->order_status, ['Dibatalkan']) && $order->payment_status != 'Lunas'
+                fn ($record): bool => $record->payment_status != 'Lunas'
             );
     }
 

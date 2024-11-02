@@ -21,7 +21,15 @@ class StatsKasirOverview extends BaseWidget
                 ->icon('heroicon-o-banknotes')
                 ->description('Jumlah Pendapatan Hari Ini')
                 ->color('info'),
-            Stat::make('Order', OrderDetail::query()->join('orders', 'orders.id', '=', 'order_details.order_id')->where('order_date', now()->format('Y-m-d'))->count())
+            Stat::make(
+                'Order',
+                OrderDetail::query()
+                    ->join('orders', 'orders.id', '=', 'order_details.order_id')
+                    ->whereNull('orders.deleted_at')
+                    ->where('orders.order_status', '!=', 'Dibatalkan')
+                    ->where('orders.order_date', now()->format('Y-m-d'))
+                    ->count()
+            )
                 ->icon('heroicon-o-shopping-cart')
                 ->description('Jumlah Order Hari Ini')
                 ->color('warning'),
