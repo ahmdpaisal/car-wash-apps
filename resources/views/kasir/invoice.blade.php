@@ -149,10 +149,13 @@
       </table>
     </div>
 
-    <META HTTP-EQUIV="REFRESH" CONTENT="2; URL={{ url('/order-payments') }}">
+    {{-- <META HTTP-EQUIV="REFRESH" CONTENT="2; URL={{ url('/order-payments') }}"> --}}
 
     <script type="text/javascript">
         window.print();
+        window.onafterprint = function() {
+            window.location.href = "{{ url('/order-payments') }}";
+        };
     </script>
 </body>
 </html>
