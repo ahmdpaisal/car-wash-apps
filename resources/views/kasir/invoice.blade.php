@@ -85,6 +85,10 @@
             .table, .table-row {
                 page-break-inside: avoid;
             }
+
+            button {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -153,9 +157,13 @@
 
     <script type="text/javascript">
         window.print();
-        window.onafterprint = function() {
-            window.location.href = "{{ url('/order-payments') }}";
-        };
+        // window.onafterprint = function() {
+        //     window.location.href = "{{ url('/order-payments') }}";
+        // };
     </script>
+
+    <button onclick="window.location.href='{{ url('/order-payments') }}'" style="margin: 20px auto; padding: 10px;">
+        Kembali ke Pembayaran
+    </button>
 </body>
 </html>
