@@ -23,7 +23,7 @@ class Order extends Model
         // Cari nomor order terakhir di bulan dan tahun tersebut
         $lastOrder = Order::where('order_code', 'LIKE', $orderMonth . '%')
                         ->orderBy('order_code', 'desc')
-                        ->withTrashed()
+                        // ->withTrashed()
                         ->first();
 
         // Jika belum ada order di bulan tersebut, nomor urut mulai dari 1

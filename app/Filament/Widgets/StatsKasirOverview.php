@@ -25,8 +25,8 @@ class StatsKasirOverview extends BaseWidget
                 'Order',
                 OrderDetail::query()
                     ->join('orders', 'orders.id', '=', 'order_details.order_id')
-                    ->whereNull('orders.deleted_at')
-                    ->where('orders.order_status', '!=', 'Dibatalkan')
+                    // ->whereNull('orders.deleted_at')
+                    // ->where('orders.order_status', '!=', 'Dibatalkan')
                     ->where('orders.order_date', now()->format('Y-m-d'))
                     ->count()
             )
