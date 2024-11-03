@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OrderPayment extends Model
 {
-    use SoftDeletes;
+    // use SoftDeletes;
 
     protected $guarded = ['id'];
 

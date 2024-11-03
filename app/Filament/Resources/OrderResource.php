@@ -224,7 +224,7 @@ class OrderResource extends Resource
             ])
             ->modifyQueryUsing(fn (Builder $query) => $query->orderBy('order_date', 'desc'))
             ->filters([
-                TrashedFilter::make(),
+                // TrashedFilter::make(),
             ])
             ->actions([
                 ActionTables::make('paymentProcess')
@@ -358,17 +358,15 @@ class OrderResource extends Resource
                             return $record->payment_status != 'Lunas';
                         })
                         ->after(function ($record) {
-                            $record->order_status = 'Dibatalkan';
-                            $record->save();
+                            OrderDetail::where('order_id', $record->id)->delete();
                         }),
-                    ForceDeleteAction::make(),
                 ]),
             ])
             ->bulkActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
-                    ForceDeleteBulkAction::make(),
-                    RestoreBulkAction::make(),
+                    // ForceDeleteBulkAction::make(),
+                    // RestoreBulkAction::make(),
                 ]),
             ])
             ->checkIfRecordIsSelectableUsing(

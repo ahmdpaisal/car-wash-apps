@@ -103,6 +103,10 @@
         <p><strong>Tanggal:</strong> {{ date('d-m-Y', strtotime($orderPayment->payment_date)) }}</p>
     </div>
 
+    <span>
+        ==================================
+    </span>
+
     <table class="table">
         {{-- <thead>
             <tr>

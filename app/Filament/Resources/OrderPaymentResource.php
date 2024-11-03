@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\OrderPaymentResource\Pages;
 use App\Filament\Resources\OrderPaymentResource\RelationManagers;
+use App\Models\EmployeeEarning;
 use App\Models\Order;
 use App\Models\OrderPayment;
 use Filament\Forms;
@@ -58,7 +59,7 @@ class OrderPaymentResource extends Resource
                     ->label('User'),
             ])
             ->filters([
-                Tables\Filters\TrashedFilter::make(),
+                // Tables\Filters\TrashedFilter::make(),
                 
             ])
             ->actions([
@@ -77,6 +78,8 @@ class OrderPaymentResource extends Resource
                         $order = Order::find($record->order_id);
                         $order->payment_status = 'Belum Lunas';
                         $order->save();
+
+                        EmployeeEarning::where('order_payment_id', $record->id)->delete();
 
                         $record->delete();
                     }),
@@ -111,7 +114,7 @@ class OrderPaymentResource extends Resource
     {
         return parent::getEloquentQuery()
             ->withoutGlobalScopes([
-                SoftDeletingScope::class,
+                // SoftDeletingScope::class,
             ]);
     }
 }
